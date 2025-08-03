@@ -2,8 +2,10 @@ name: 69云签到
 
 on:
   workflow_dispatch:  # 允许手动触发
-  schedule:
-    - cron: '0 16 * * *'  # 每天 UTC 16:00 执行 (北京时间 00:00)
+  # schedule:
+  #   - cron: '0 16 * * *'  # 每天 UTC 16:00 执行 (北京时间 00:00)
+    # 暂时注释掉 schedule，直到问题解决并确保脚本稳定性。
+    # 如果你确定脚本和库是稳定的，可以取消注释。
 
 jobs:
   checkin:
@@ -16,12 +18,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.9' # 锁死到 3.9，确保环境一致性
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
+          pip install -r requirements.txt # <-- 🌟 主要修改点：从 requirements.txt 安装
 
       - name: Run 69yun.py
         id: run_script  # 添加一个 ID，方便后续步骤引用
